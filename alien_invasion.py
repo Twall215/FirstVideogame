@@ -89,15 +89,16 @@ class AlienInvasion:
             self.aliens.add(alien)
 
     def _create_fleet(self):
-         #Make an alien and find the number of aliens in a row
+         #width of the row
          #Spacing between each alien is one alien width
          alien = Alien(self)
          alien_width, alien_height = alien.rect.size
          available_space_x = self.settings.screen_width - (2*alien_width)
-         number_aliens_x = available_space_x // (2*alien_width)
+         #Puts 9 aliens on screen
+         number_aliens_x = available_space_x // (3*alien_width)
          #Height of the row
          ship_height = self.ship.rect.height
-         available_space_y = (self.settings.screen_height - (3*alien_height) - ship_height)
+         available_space_y = (self.settings.screen_height - (10*alien_height) - ship_height) #Gives the player a fighting chance(4 rows)
          number_rows = available_space_y // (2*alien_height)
 
          #Create the full fleet of aliens
