@@ -6,7 +6,7 @@ class Bullet(Sprite):
     def __init__(self, ai_game):
         super().__init__()
         self.screen = ai_game.screen
-        self.settimgs = ai_game.settings
+        self.settings = ai_game.settings
         self.color = self.settings.bullet_color
 
         #bullet rect @ (0,0) and sets correct position
