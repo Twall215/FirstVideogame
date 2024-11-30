@@ -84,6 +84,11 @@ class AlienInvasion:
                  self.bullets,self.aliens, True, True
             )
 
+            if not self.aliens:
+                 #Destroy existing bullets and create new fleet
+                 self.bullets.empty()
+                 self._create_fleet()
+
     #Create an alien and place in the row
     def _create_alien(self, alien_number, row_number):
             alien = Alien(self)
