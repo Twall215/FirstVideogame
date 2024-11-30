@@ -69,8 +69,22 @@ class AlienInvasion:
                  self._check_play_button(mouse_pos)
 
     def _check_play_button(self, mouse_pos):
-         if self.play_button.rect.collidepoint(mouse_pos):
-              self.stats.game_active = True 
+         #starts a new game when the player clicks play
+         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+         if button_clicked and not self.stats.game_active:
+              #HIde the mouse cursor
+              pygame.mouse.set_visible(False)
+              #Resets stats
+              self.stats.reset_stats()
+              self.stats.game_active = True
+
+              #Clear the board
+              self.aliens.empty()
+              self.bullets.empty()
+
+              #Create a new fleet and center ship
+              self._create_fleet()
+              self.ship.center_ship()
 
     def _fire_bullet(self):
         #Create a new bullet and add it to the bullets group
@@ -178,6 +192,7 @@ class AlienInvasion:
             sleep(0.5)
         else:
              self.stats.game_active = False
+             pygame.mouse.set_visible(True)
 
     def _check_aliens_bottom(self):
          screen_rect = self.screen.get_rect()
