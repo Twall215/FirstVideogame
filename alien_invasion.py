@@ -37,7 +37,6 @@ class AlienInvasion:
             elif event.key == pygame.K_SPACE:
                 self._fire_bullet()
     
-
     #Allows for action to stop once key has been released                
     def _check_keyup_events(self, event):
             if event.key == pygame.K_RIGHT:
@@ -80,11 +79,25 @@ class AlienInvasion:
                       self.bullets.remove(bullet)
             print(len(self.bullets))
 
+    #Create an alien and place in the row
+    def _create_alien(self, alien_number):
+            alien = Alien(self)
+            alien_width = alien.rect.width
+            alien.x = alien_width + 2 * alien_width * alien_number
+            alien.rect.x = alien.x
+            self.aliens.add(alien)
+
     def _create_fleet(self):
-         #Make an alien
+         #Make an alien and find the number of aliens in a row
+         #Spacing between each alien is one alien width
          alien = Alien(self)
-         #add to group that holds the fleet
-         self.aliens.add(alien)
+         alien_width = alien.rect.width
+         available_space_x = self.settings.screen_width - (2*alien_width)
+         number_aliens_x = available_space_x // (2*alien_width)
+         #Create the first row of aliens
+         for alien_number in range(number_aliens_x):
+              self._create_alien(alien_number)
+            
 
     def run_game(self):
         while True:
