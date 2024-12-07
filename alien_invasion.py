@@ -7,7 +7,7 @@ from ship import Ship
 from bullet import Bullet
 from alien import Alien
 from button import Button
-
+from scoreboard import Scoreboard
 
 class AlienInvasion:
     #overall class to manage game assets and behavior
@@ -22,6 +22,9 @@ class AlienInvasion:
 
         #Create an instance to store game statistics
         self.stats = GameStats(self)
+
+        #Draw game score info
+        self.sb = Scoreboard(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -72,13 +75,14 @@ class AlienInvasion:
          #starts a new game when the player clicks play
          button_clicked = self.play_button.rect.collidepoint(mouse_pos)
          if button_clicked and not self.stats.game_active:
-              #HIde the mouse cursor
+              #Hide the mouse cursor
               pygame.mouse.set_visible(False)
-              #Resets stats
               #Reset game settings
               self.settings.initialize_dynamic_settings()
+              #Resets stats
               self.stats.reset_stats()
               self.stats.game_active = True
+              self.sb.prep_score()
 
               #Clear the board
               self.aliens.empty()
@@ -105,6 +109,9 @@ class AlienInvasion:
             #puts the aliens on the screen
             self.aliens.draw(self.screen)
 
+            #Draw the Scoreboard
+            self.sb.show_score()
+
             #Draw the play button if the game is inactive
             if not self.stats.game_active:
                  self.play_button.draw_button()
@@ -124,6 +131,13 @@ class AlienInvasion:
             collisions = pygame.sprite.groupcollide(
                  self.bullets,self.aliens, True, True
             )
+
+            if collisions:
+                 for aliens in collisions.values():
+                    self.stats.score += self.settings.alien_points * len(aliens)
+                 self.sb.prep_score()
+                 self.sb.check_high_score()
+
             if not self.aliens:
                  #Destroy existing bullets and create new fleet
                  self.bullets.empty()
