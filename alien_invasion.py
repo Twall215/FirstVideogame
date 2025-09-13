@@ -9,6 +9,7 @@ from alien import Alien
 from button import Button
 from scoreboard import Scoreboard
 
+#This is going to be a new project where I edit over the old pieces and make something new
 class AlienInvasion:
     #overall class to manage game assets and behavior
     def __init__(self):
