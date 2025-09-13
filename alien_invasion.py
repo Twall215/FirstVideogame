@@ -218,7 +218,7 @@ class AlienInvasion:
              self.stats.game_active = False
              pygame.mouse.set_visible(True)
 
-    def _check_aliens_bottom(self):
+    def _check_aliens_bottom(self):#are the aliens at the bottom of the screen?
          screen_rect = self.screen.get_rect()
          for alien in self.aliens.sprites():
               if alien.rect.bottom >= screen_rect.bottom:
